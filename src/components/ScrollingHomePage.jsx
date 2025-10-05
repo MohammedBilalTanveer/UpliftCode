@@ -3,8 +3,12 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { motion } from "motion/react";
 import { Button } from "./ui/button";
+import heroImg from "../assets/bg-hero.jpg";
+import bhavyaImg from "../assets/bhavya-gundanna.jpg";
+
 import {
   ArrowRight,
+  Code,
   Calendar,
   CheckCircle,
   Globe,
@@ -21,6 +25,7 @@ import PropTypes from "prop-types";
 import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Card } from "@/components/ui/card";
 import Footer from "./Footer";
 
 /**
@@ -266,36 +271,120 @@ export function ScrollingHomePage({ onPageChange }) {
           <Calendar className="mr-2 w-5 h-5" /> Book Free Consultation
         </Button>
       </motion.div>
-      {/* HERO */}
-      <section id="home" className="hero-section">
-        <div className="hero-container">
-          <h1 className="hero-heading">
+      {/* HERO SECTION */}
+      <section
+        id="home"
+        className="hero-section min-h-screen flex flex-col justify-center bg-cover bg-center bg-no-repeat pt-20"
+        style={{
+          background: "url('/assets/Milky_way.jpg')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
+        {/* Hero Container */}
+        <div className="hero-container text-center px-6 py-16 max-w-5xl mx-auto space-y-6">
+          <h1 className="hero-heading text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent extra-margin">
             {displayText}
             <motion.span
               animate={{ opacity: [1, 0, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
-              style={{ color: "#c084fc" }}
+              style={{ color: "#1837f3" }}
             >
               |
             </motion.span>
           </h1>
 
-          <p className="hero-subtext">
-            UpliftCode delivers AI-driven development, QA, and evaluations—
-            ensuring your product is built with trust, quality, and scale in mind.
+          <p className="hero-subtext text-lg text-muted-foreground max-w-3xl mx-auto">
+            UpliftCode delivers AI-driven development, QA, and evaluations—ensuring
+            your product is built with trust, quality, and scale in mind.
           </p>
 
-          <div className="hero-buttons">
-            <button className="hero-btn-primary">
-              Explore Services <ArrowRight className="inline-block w-4 h-4" />
+          <div className="hero-buttons flex flex-wrap gap-4 justify-center">
+            <button
+              className="hero-btn-primary bg-gradient-to-r from-purple-500 to-purple-700 text-white px-6 py-3 rounded-xl font-medium flex items-center gap-2 hover:shadow-lg transition"
+              onClick={() => {
+                const el = document.getElementById("services");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              Explore Services <ArrowRight className="w-4 h-4" />
             </button>
-            <button className="hero-btn-secondary">
-              <Calendar className="inline-block w-4 h-4" />
+
+            <button
+              className="hero-btn-secondary border border-purple-500/50 text-purple-400 px-6 py-3 rounded-xl font-medium flex items-center gap-2 hover:bg-purple-500/10 transition"
+              onClick={() => {
+                const el = document.getElementById("contact-us");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              <Calendar className="w-4 h-4" />
               Book Free Consultation
             </button>
           </div>
         </div>
+
+        {/* Feature Grid */}
+        <div className="container mx-auto px-6 mt-10 mb-20">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="grid md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                icon: Code,
+                title: "Software Development",
+                points: [
+                  "AI-driven software engineering",
+                  "Scalable architecture design",
+                  "Secure & efficient coding practices",
+                  "API & system integrations",
+                ],
+              },
+              {
+                icon: Shield,
+                title: "Quality Assurance",
+                points: [
+                  "Security & Vulnerability Testing",
+                  "Regression Testing & Smart Automation",
+                  "Performance & Load Testing",
+                  "Analytics & Real-time Dashboards",
+                ],
+              },
+              {
+                icon: BarChart3,
+                title: "Evals (Evaluations)",
+                points: [
+                  "Automated Benchmarks (Precision, Recall, BLEU, F1, BERTScore)",
+                  "Human-in-the-Loop Testing (usability, alignment, safety)",
+                  "Domain-Specific Evals (FinTech, Healthcare, Enterprise)",
+                  "Continuous Monitoring (drift, hallucinations, fairness)",
+                ],
+              },
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.7 + i * 0.1 }}
+                whileHover={{ scale: 1.03 }}
+              >
+                <Card className="p-6 h-full bg-gradient-to-br from-card to-card/50 border-purple-500/20 text-left rounded-2xl shadow-md">
+                  <feature.icon className="w-12 h-12 text-purple-500 mb-4" />
+                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                  <ul className="text-muted-foreground space-y-1 list-disc list-inside">
+                    {feature.points.map((point, idx) => (
+                      <li key={idx}>{point}</li>
+                    ))}
+                  </ul>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </section>
+
 
       <section id="services" className="services-section">
         <div className="container mx-auto px-6">
@@ -462,7 +551,7 @@ export function ScrollingHomePage({ onPageChange }) {
                 <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-60 blur-lg group-hover:opacity-90 transition duration-500"></div>
                 <img
                   className="relative w-[320px] sm:w-[390px] rounded-full border-4 border-purple-500 shadow-lg imgwidth"
-                  src="/bhavya-gundanna.jpg"
+                  src={bhavyaImg}
                   alt="Bhavya Gundanna"
                 />
               </div>
