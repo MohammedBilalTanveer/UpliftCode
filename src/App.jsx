@@ -16,7 +16,7 @@ export default function App() {
     <div
       className="min-h-screen overflow-x-hidden relative"
       style={{
-        backgroundImage: "url('/bg-hero.jpg')",
+        backgroundImage: "url('/bg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
