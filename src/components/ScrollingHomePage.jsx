@@ -1,9 +1,9 @@
 /* File: src/components/ScrollingHomePage.jsx */
 "use client";
 import React, { useEffect, useState, useMemo, useRef } from "react";
-import { motion } from "motion/react";
+import { motion,useMotionValue } from "motion/react";
 import { Button } from "./ui/button";
-import heroImg from "../assets/bg-hero.jpg";
+import heroImg from "../assets/Milky_way.jpg";
 import bhavyaImg from "../assets/bhavya-gundanna.jpg";
 import CultureCarouselSection from './CultureCarouselSection'
 import {
@@ -213,6 +213,63 @@ export function ScrollingHomePage({ onPageChange }) {
     return () => window.removeEventListener("keydown", handleShortcut);
   }, []);
 
+const x = useMotionValue(0);
+const servicesContainerRef = useRef(null);
+const [isHovered, setIsHovered] = useState(false);
+const [isMobile, setIsMobile] = useState(false);
+const [halfWidth, setHalfWidth] = useState(0);
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+  handleResize();
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+useEffect(() => {
+  const updateWidth = () => {
+    if (servicesContainerRef.current) {
+      setHalfWidth(servicesContainerRef.current.scrollWidth / 2);
+    }
+  };
+  updateWidth();
+  window.addEventListener('resize', updateWidth);
+  return () => window.removeEventListener('resize', updateWidth);
+}, []);
+
+useEffect(() => {
+  let raf;
+  if (halfWidth === 0) return;
+
+  let lastTime = performance.now();
+  const pxPerMs = halfWidth / 40000; // For 40s duration
+
+  const animateScroll = () => {
+    const now = performance.now();
+    const delta = now - lastTime;
+    lastTime = now;
+
+    let current = x.get();
+    current -= pxPerMs * delta;
+    if (current < -halfWidth) {
+      current += halfWidth;
+    }
+    x.set(current);
+
+    raf = requestAnimationFrame(animateScroll);
+  };
+
+  if (!isHovered && !isMobile) {
+    animateScroll();
+  }
+
+  return () => {
+    if (raf) cancelAnimationFrame(raf);
+  };
+}, [isHovered, isMobile, x, halfWidth]);
+
+// The modified services section
   // -----------------------------------------
   // Contact form (EmailJS)
   // -----------------------------------------
@@ -275,7 +332,7 @@ export function ScrollingHomePage({ onPageChange }) {
         id="home"
         className="hero-section min-h-screen flex flex-col justify-center bg-cover bg-center bg-no-repeat pt-20"
         style={{
-          background: "url('./Milky_way.jpg')",
+          background: `url(${heroImg})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat:'no-repeat'
@@ -376,138 +433,144 @@ export function ScrollingHomePage({ onPageChange }) {
         </div>
       </section>
 
+<section id="services" className="services-section">
+  <div className="container mx-auto px-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="text-center mb-16"
+    >
+      <h1
+        className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent relative inline-block"
+        style={{
+          WebkitTextFillColor: "transparent",
+          WebkitBackgroundClip: "text",
+          paddingBottom: "0.2em",
+        }}
+      >
+        Uplifting Every Stage of Software Development
+      </h1>
+      <p className="text-xl text-[rgba(224,230,237,0.8)] max-w-3xl mx-auto">
+        Development. Testing. Evaluation. Delivered with an AI-first mindset.
+      </p>
+    </motion.div>
 
-      <section id="services" className="services-section">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h1
-              className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent relative inline-block"
-              style={{
-                WebkitTextFillColor: "transparent",
-                WebkitBackgroundClip: "text",
-                paddingBottom: "0.2em",
-              }}
-            >
-              Uplifting Every Stage of Software Development
-            </h1>
-            <p className="text-xl text-[rgba(224,230,237,0.8)] max-w-3xl mx-auto">
-Development. Testing. Evaluation. Delivered with an AI-first mindset.            </p>
-          </motion.div>
-
-          <div className="overflow-hidden hover:overflow-y-visible overflow-x-hidden">
+    <div
+      className="overflow-hidden overflow-x-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <motion.div
+        ref={servicesContainerRef}
+        className="flex gap-8 services-scroll"
+        style={{ x }}
+        drag={isMobile ? "x" : false}
+        dragConstraints={isMobile ? { left: -halfWidth, right: 0 } : undefined}
+      >
+        {[...services, ...services].map((service, index) => {
+          const Icon = service.icon;
+          return (
             <motion.div
-              className="flex gap-8 services-scroll"
-              animate={{ x: ["0%", "-100%"] }}  // FIXED: full scroll
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              key={index}
+              className="relative shrink-0 rounded-2xl overflow-hidden shadow-xl bg-black/40 widthing"
+              whileHover={{ scale: 1.05 }}
             >
-              {[...services, ...services].map((service, index) => {
-                const Icon = service.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    className="relative shrink-0 rounded-2xl overflow-hidden shadow-xl bg-black/40 widthing"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    {/* Animated pattern background */}
-                    <motion.div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage:
-                          service.pattern === "diagonal"
-                            ? "repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 2px, transparent 2px, transparent 6px)"
-                            : service.pattern === "dots"
-                              ? "radial-gradient(rgba(255,255,255,0.25) 2px, transparent 4px)"
-                              : service.pattern === "grid"
-                                ? "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)"
-                                : service.pattern === "waves"
-                                  ? "repeating-radial-gradient(circle, rgba(255,255,255,0.12), transparent 60px)"
-                                  : "linear-gradient(135deg, rgba(255,255,255,0.1), transparent)",
-                        backgroundSize:
-                          service.pattern === "dots"
-                            ? "40px 40px"
-                            : service.pattern === "grid"
-                              ? "60px 60px"
-                              : "200% 200%",
-                      }}
-                      animate={
-                        service.pattern === "dots"
-                          ? { backgroundPosition: ["0% 0%", "40px 40px"] }
-                          : service.pattern === "grid"
-                            ? { backgroundPosition: ["0% 0%", "60px 60px"] }
-                            : service.pattern === "waves"
-                              ? { scale: [1, 1.1, 1] }
-                              : service.pattern === "diagonal"
-                                ? { rotate: [0, 360] }
-                                : { opacity: [0.3, 0.6, 0.3] }
-                      }
-                      transition={{
-                        duration:
-                          service.pattern === "diagonal"
-                            ? 25
-                            : service.pattern === "waves"
-                              ? 6
-                              : 12,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    />
+              {/* Animated pattern background */}
+              <motion.div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage:
+                    service.pattern === "diagonal"
+                      ? "repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 2px, transparent 2px, transparent 6px)"
+                      : service.pattern === "dots"
+                        ? "radial-gradient(rgba(255,255,255,0.25) 2px, transparent 4px)"
+                        : service.pattern === "grid"
+                          ? "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)"
+                          : service.pattern === "waves"
+                            ? "repeating-radial-gradient(circle, rgba(255,255,255,0.12), transparent 60px)"
+                            : "linear-gradient(135deg, rgba(255,255,255,0.1), transparent)",
+                  backgroundSize:
+                    service.pattern === "dots"
+                      ? "40px 40px"
+                      : service.pattern === "grid"
+                        ? "60px 60px"
+                        : "200% 200%",
+                }}
+                animate={
+                  service.pattern === "dots"
+                    ? { backgroundPosition: ["0% 0%", "40px 40px"] }
+                    : service.pattern === "grid"
+                      ? { backgroundPosition: ["0% 0%", "60px 60px"] }
+                      : service.pattern === "waves"
+                        ? { scale: [1, 1.1, 1] }
+                        : service.pattern === "diagonal"
+                          ? { rotate: [0, 360] }
+                          : { opacity: [0.3, 0.6, 0.3] }
+                }
+                transition={{
+                  duration:
+                    service.pattern === "diagonal"
+                      ? 25
+                      : service.pattern === "waves"
+                        ? 6
+                        : 12,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
 
-                    {/* Gradient overlay */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-70`}
-                    />
+              {/* Gradient overlay */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-70`}
+              />
 
-                    {/* Card content */}
-                    <div className="relative z-10 p-6 flex flex-col h-full text-white">
+              {/* Card content */}
+              <div className="relative z-10 p-6 flex flex-col h-full text-white">
+                <div
+                  className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${service.iconBg} p-2 mb-4 flex items-center justify-center`}
+                >
+                  <Icon className="w-7 h-7 text-white" />
+                </div>
+
+                <h3
+                  className={`text-3xl font-bold mb-1 bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
+                >
+                  {service.title}
+                </h3>
+
+                <p className="text-lg font-medium mb-3 text-white/80">
+                  {service.subtitle}
+                </p>
+
+                <div className="space-y-2 mb-4 flex-1 overflow-hidden">
+                  {service.features.map((f, fi) => (
+                    <div key={fi} className="flex items-center gap-2 text-xs">
                       <div
-                        className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${service.iconBg} p-2 mb-4 flex items-center justify-center`}
+                        className={`w-4 h-4 rounded-full bg-gradient-to-r ${service.iconBg} flex items-center justify-center`}
                       >
-                        <Icon className="w-7 h-7 text-white" />
+                        <CheckCircle className="w-2.5 h-2.5 text-white" />
                       </div>
-
-                      <h3
-                        className={`text-3xl font-bold mb-1 bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
-                      >
-                        {service.title}
-                      </h3>
-
-                      <p className="text-lg font-medium mb-3 text-white/80">
-                        {service.subtitle}
-                      </p>
-
-                      <div className="space-y-2 mb-4 flex-1 overflow-hidden">
-                        {service.features.map((f, fi) => (
-                          <div key={fi} className="flex items-center gap-2 text-xs">
-                            <div
-                              className={`w-4 h-4 rounded-full bg-gradient-to-r ${service.iconBg} flex items-center justify-center`}
-                            >
-                              <CheckCircle className="w-2.5 h-2.5 text-white" />
-                            </div>
-                            <span className="text-white/90 truncate text-sm">{f}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <motion.div
-                        className={`h-1 rounded-full bg-gradient-to-r ${service.gradient} opacity-90`}
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 0.8 }}
-                      />
+                      <span className="text-white/90 truncate text-sm">{f}</span>
                     </div>
-                  </motion.div>
-                );
-              })}
+                  ))}
+                </div>
+
+                <motion.div
+                  className={`h-1 rounded-full bg-gradient-to-r ${service.gradient} opacity-90`}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 0.8 }}
+                />
+              </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
+          );
+        })}
+      </motion.div>
+    </div>
+  </div>
+</section>
       <CultureCarouselSection id='our-culture' />
       <section id="about" className="py-20 bg-[#0d0d14]">
         <div className="container mx-auto px-6">
@@ -762,7 +825,7 @@ Development. Testing. Evaluation. Delivered with an AI-first mindset.          
                     </div>
                     <div>
                       <h3 className="font-semibold">Phone</h3>
-                      <p className="text-[rgba(224,230,237,0.75)]">+19 90600 62992</p>
+                      <p className="text-[rgba(224,230,237,0.75)]">+91 90600 62992</p>
                     </div>
                   </div>
 

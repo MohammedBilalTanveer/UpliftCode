@@ -184,7 +184,7 @@ export default function CultureCarouselSection() {
                         modifier: 2.5,
                         slideShadows: false,
                     }}
-                    className="w-full px-12 visible"
+                    className="w-full px-12 visible culture-margin"
                 >
                     {culturePrinciples.map((principle, index) => (
                         <SwiperSlide key={index} style={{ overflow: 'visible' }}>

@@ -3347,3 +3347,16 @@ select option {
 .visible{
   overflow: visible;
 }
+.culture-margin{
+  margin-left: 10px;
+}
+@media (max-width : 1200px){
+  .culture-margin{
+    margin-left : 5px;
+  }
+}
+@media (max-width : 750px){
+  .culture-margin{
+    margin-left : 0px;
+  }
+}
