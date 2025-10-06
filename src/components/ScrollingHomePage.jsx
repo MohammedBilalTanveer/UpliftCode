@@ -766,12 +766,12 @@ useEffect(() => {
                       className="w-full px-3 py-2 rounded-md bg-[#1a1a26] text-white border border-[rgba(255,255,255,0.06)] focus:ring-2 focus:ring-purple-500"
                     >
                       <option value="">Select a service</option>
-                      <option value="ai-testing">AI Product Testing</option>
-                      <option value="security">Security & Vulnerability</option>
-                      <option value="regression">Regression Testing</option>
-                      <option value="analytics">Test Analytics & Reporting</option>
-                      <option value="performance">Performance Optimization</option>
-                      <option value="integration">API & Integration Testing</option>
+                      <option value="AI-Product-Testing">AI Product Testing</option>
+                      <option value="Security-&-Vulnerability">Security & Vulnerability</option>
+                      <option value="Regression-Testing">Regression Testing</option>
+                      <option value="Test-Analytics-&-Reporting">Test Analytics & Reporting</option>
+                      <option value="Performance-Optimization">Performance Optimization</option>
+                      <option value="API-&-Integration-Testing">API & Integration Testing</option>
                       <option value="consultation">Free Consultation</option>
                     </select>
                   </div>
