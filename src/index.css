@@ -3019,14 +3019,14 @@ html {
   border-radius: 50%;
 }
 .bordering{
-  border: 2px solid #1837f3;
+  border: 2px solid #a84bff;
   border-radius: 20px;
   padding: 20px;
   margin-top: 10px;
 }
 .missionvalues {
   width: 300px;  
-  background: #1837f3;          /* keep it consistent */
+  background: #a84bff;          /* keep it consistent */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -3157,7 +3157,6 @@ select option {
   font-weight: 700;
   font-size: 2rem; /* default mobile */
   line-height: 1.2;
-  background: linear-gradient(to right, #1837f3, #3b5dfc, #5f7eff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
@@ -3167,7 +3166,7 @@ select option {
 .hero-heading span {
   -webkit-text-fill-color: initial !important; /* reset transparency */
   background: none !important;                /* remove gradient inheritance */
-  color:  #1837f3 !important;                  /* visible purple color */
+  color:  #a84bff !important;                  /* visible purple color */
 }
 
 
@@ -3209,7 +3208,7 @@ select option {
 .hero-btn-secondary {
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  border: 1px solid #1837f3;
+  border: 1px solid #a84bff;
   color: #e0e6ed;
   font-size: 1rem;
   font-weight: 500;
@@ -3300,13 +3299,13 @@ select option {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #1837f3; /* thumb color */
+  background-color: #9e36ff; /* thumb color */
   border-radius: 8px;
   min-height: 40px;          /* reduce thumb height */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #3851f0; /* hover effect */
+  background-color: #ab55fc; /* hover effect */
 }
 
 /* Remove arrows (called buttons) */
@@ -3319,7 +3318,7 @@ select option {
 /* Firefox */
 * {
   scrollbar-width: thin;               /* small scrollbar */
-  scrollbar-color: #1837f3 transparent; /* thumb + transparent track */
+  scrollbar-color: #a84bff transparent; /* thumb + transparent track */
 }
 .extra-margin{
   margin-top: 100px;
@@ -3328,142 +3327,4 @@ select option {
   .extra-margin {
     margin-top: 50px !important;
   }
-}
-/* ====== BLUE THEME OVERRIDE ====== */
-:root {
-  --primary-color: #1837f3;
-  --primary-color-light: rgba(24, 55, 243, 0.8);
-}
-
-/* General gradient replacements */
-.bg-gradient-to-r.from-purple-500.to-purple-700,
-.bg-gradient-to-r.from-purple-400.to-purple-600,
-.bg-gradient-to-r.from-purple-500.to-purple-600,
-.bg-gradient-to-r.from-purple-400.via-purple-500.to-purple-600 {
-  background-image: linear-gradient(to right, var(--primary-color), var(--primary-color-light)) !important;
-}
-
-.text-purple-400,
-.text-purple-500,
-.text-purple-600,
-.text-purple-700 {
-  color: var(--primary-color) !important;
-}
-
-/* Gradient text (like headings) */
-.bg-gradient-to-r.from-purple-400.via-purple-500.to-purple-600.bg-clip-text.text-transparent {
-  background-image: linear-gradient(to right, var(--primary-color), var(--primary-color-light)) !important;
-  -webkit-background-clip: text !important;
-  color: transparent !important;
-}
-
-/* Borders */
-.border-purple-500,
-.border-purple-500\/50,
-.border-purple-500\/20 {
-  border-color: var(--primary-color) !important;
-}
-
-/* Buttons */
-button.bg-gradient-to-r.from-purple-500.to-purple-700,
-.hero-btn-primary {
-  background-image: linear-gradient(to right, var(--primary-color), var(--primary-color-light)) !important;
-  border: none !important;
-}
-
-/* Icons / Accent highlights */
-.text-purple-500,
-.text-purple-400,
-.text-purple-600 {
-  color: var(--primary-color) !important;
-}
-
-/* Hover states */
-button:hover,
-a:hover {
-  color: var(--primary-color) !important;
-}
-
-/* Book Consultation floating button */
-.fixed.bottom-8.right-8 .bg-gradient-to-r.from-purple-500.to-purple-700 {
-  background-image: linear-gradient(to right, var(--primary-color), var(--primary-color-light)) !important;
-}
-
-/* Mission/Values glowing border */
-.border-purple-500 {
-  border-color: var(--primary-color) !important;
-}
-
-/* Footer gradient text */
-footer .bg-gradient-to-r.from-purple-400.to-purple-600.bg-clip-text.text-transparent {
-  background-image: linear-gradient(to right, var(--primary-color), var(--primary-color-light)) !important;
-  -webkit-background-clip: text;
-  color: transparent !important;
-}
-/* ====== Blue Theme Override for Navigation ====== */
-:root {
-  --primary-color: #1837f3;
-  --primary-color-light: rgba(24, 55, 243, 0.85);
-}
-
-/* Brand icon gradient */
-.bg-gradient-to-br.from-purple-500.to-purple-700 {
-  background-image: linear-gradient(
-    to bottom right,
-    var(--primary-color),
-    var(--primary-color-light)
-  ) !important;
-}
-
-/* Brand text gradient */
-.bg-gradient-to-r.from-purple-400.to-purple-600.bg-clip-text.text-transparent {
-  background-image: linear-gradient(
-    to right,
-    var(--primary-color),
-    var(--primary-color-light)
-  ) !important;
-  -webkit-background-clip: text !important;
-  color: transparent !important;
-}
-
-/* Active nav item */
-.text-purple-400 {
-  color: var(--primary-color) !important;
-}
-
-/* Underline gradient (active tab highlight) */
-.bg-gradient-to-r.from-purple-500.to-purple-600 {
-  background-image: linear-gradient(
-    to right,
-    var(--primary-color),
-    var(--primary-color-light)
-  ) !important;
-}
-
-/* Get Started button */
-.bg-gradient-to-r.from-purple-500.to-purple-700,
-.hover\:from-purple-600:hover,
-.hover\:to-purple-800:hover {
-  background-image: linear-gradient(
-    to right,
-    var(--primary-color),
-    var(--primary-color-light)
-  ) !important;
-  color: #fff !important;
-}
-
-/* Mobile menu active link */
-.lg\:hidden .text-purple-400 {
-  color: var(--primary-color) !important;
-}
-
-/* Subtle hover tint */
-button:hover,
-a:hover {
-  color: var(--primary-color) !important;
-}
-.blue-gradient-text {
-  background: linear-gradient(to right, #1837f3, #3b5dfc, #5f7eff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
