@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 export function Navigation({ currentPage, onPageChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navItems = ["Home", "Services", "About", "Contact Us"];
+  const navItems = ["Home", "Services", "Our Culture", "About", "Contact Us"];
 
   const scrollToSection = (sectionId) => {
     const id = sectionId.toLowerCase().replace(" ", "-");
@@ -70,11 +70,11 @@ export function Navigation({ currentPage, onPageChange }) {
           <div className="flex items-center gap-4">
             {/* Show only on lg and larger screens */}
             <Button
-  className="inline-flex flex-shrink-0 bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 shadow-md text-sm px-6 py-2 h-10 hide"
-  onClick={() => scrollToSection("Contact Us")}
->
-  Get Started
-</Button>
+              className="inline-flex flex-shrink-0 bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 shadow-md text-sm px-6 py-2 h-10 hide"
+              onClick={() => scrollToSection("Contact Us")}
+            >
+              Get Started
+            </Button>
 
             {/* Mobile toggle */}
             <motion.button

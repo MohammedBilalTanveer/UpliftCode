@@ -3026,7 +3026,7 @@ html {
 }
 .missionvalues {
   width: 300px;  
-  background: #a84bff;          /* keep it consistent */
+  background: #912cef;          /* keep it consistent */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -3166,7 +3166,7 @@ select option {
 .hero-heading span {
   -webkit-text-fill-color: initial !important; /* reset transparency */
   background: none !important;                /* remove gradient inheritance */
-  color:  #a84bff !important;                  /* visible purple color */
+  color:  #912cef !important;                  /* visible purple color */
 }
 
 
@@ -3208,7 +3208,7 @@ select option {
 .hero-btn-secondary {
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  border: 1px solid #a84bff;
+  border: 1px solid #912cef;
   color: #e0e6ed;
   font-size: 1rem;
   font-weight: 500;
@@ -3299,7 +3299,7 @@ select option {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #9e36ff; /* thumb color */
+  background-color: #912cef; /* thumb color */
   border-radius: 8px;
   min-height: 40px;          /* reduce thumb height */
 }
@@ -3327,4 +3327,23 @@ select option {
   .extra-margin {
     margin-top: 50px !important;
   }
+}
+.cust-height {
+  height: 420px;
+  padding-bottom: 2.5rem; /* Increased to ensure space for bottom gradient line */
+}
+
+/* ✨ Soft glow for card border */
+.shadow-glow-soft {
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.1),
+              0 0 25px rgba(192, 38, 211, 0.05);
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+}
+
+.shadow-glow-soft:hover {
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.2),
+              0 0 50px rgba(192, 38, 211, 0.1);
+}
+.visible{
+  overflow: visible;
 }

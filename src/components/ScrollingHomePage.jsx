@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { Button } from "./ui/button";
 import heroImg from "../assets/bg-hero.jpg";
 import bhavyaImg from "../assets/bhavya-gundanna.jpg";
-
+import CultureCarouselSection from './CultureCarouselSection'
 import {
   ArrowRight,
   Code,
@@ -26,8 +26,6 @@ import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card } from "@/components/ui/card";
-import Footer from "./Footer";
-
 /**
  * ScrollingHomePage — self-contained version.
  * - Hero with typewriter tagline
@@ -68,6 +66,7 @@ export function ScrollingHomePage({ onPageChange }) {
       const sections = [
         { id: "home", name: "Home" },
         { id: "services", name: "Services" },
+        { id: "our-culture", name: "Our Culture" },
         { id: "about", name: "About" },
         { id: "contact-us", name: "Contact Us" },
       ];
@@ -276,9 +275,10 @@ export function ScrollingHomePage({ onPageChange }) {
         id="home"
         className="hero-section min-h-screen flex flex-col justify-center bg-cover bg-center bg-no-repeat pt-20"
         style={{
-          background: "url('/assets/Milky_way.jpg')",
+          background: "url('./Milky_way.jpg')",
           backgroundPosition: "center",
           backgroundSize: "cover",
+          backgroundRepeat:'no-repeat'
         }}
       >
         {/* Hero Container */}
@@ -334,32 +334,23 @@ export function ScrollingHomePage({ onPageChange }) {
             {[
               {
                 icon: Code,
-                title: "Software Development",
+                title: "AI-Driven Development",
                 points: [
-                  "AI-driven software engineering",
-                  "Scalable architecture design",
-                  "Secure & efficient coding practices",
-                  "API & system integrations",
+                  "We don’t just build software, we engineer intelligent systems that scale",
                 ],
               },
               {
                 icon: Shield,
-                title: "Quality Assurance",
+                title: "Quality Assurance & Testing",
                 points: [
-                  "Security & Vulnerability Testing",
-                  "Regression Testing & Smart Automation",
-                  "Performance & Load Testing",
-                  "Analytics & Real-time Dashboards",
+                  "Testing that goes beyond bugs ensuring reliability, speed, and security",
                 ],
               },
               {
                 icon: BarChart3,
-                title: "Evals (Evaluations)",
+                title: "AI Evals & Reliability",
                 points: [
-                  "Automated Benchmarks (Precision, Recall, BLEU, F1, BERTScore)",
-                  "Human-in-the-Loop Testing (usability, alignment, safety)",
-                  "Domain-Specific Evals (FinTech, Healthcare, Enterprise)",
-                  "Continuous Monitoring (drift, hallucinations, fairness)",
+                  "Turning AI into measurable trust through rigorous evaluation.",
                 ],
               },
             ].map((feature, i) => (
@@ -403,11 +394,10 @@ export function ScrollingHomePage({ onPageChange }) {
                 paddingBottom: "0.2em",
               }}
             >
-              End-to-End AI-Powered Testing Solutions
+              Uplifting Every Stage of Software Development
             </h1>
             <p className="text-xl text-[rgba(224,230,237,0.8)] max-w-3xl mx-auto">
-              Comprehensive testing suite powered by cutting-edge AI technology
-            </p>
+Development. Testing. Evaluation. Delivered with an AI-first mindset.            </p>
           </motion.div>
 
           <div className="overflow-hidden hover:overflow-y-visible overflow-x-hidden">
@@ -518,7 +508,7 @@ export function ScrollingHomePage({ onPageChange }) {
           </div>
         </div>
       </section>
-
+      <CultureCarouselSection id='our-culture' />
       <section id="about" className="py-20 bg-[#0d0d14]">
         <div className="container mx-auto px-6">
           {/* Heading */}
@@ -633,7 +623,7 @@ export function ScrollingHomePage({ onPageChange }) {
               Contact Us
             </h1>
             <p className="text-[rgba(224,230,237,0.85)] max-w-3xl mx-auto mt-3">
-              Ready to transform your QA process? Get in touch.
+              Ready to Uplift Your Product? Get in Touch.
             </p>
           </motion.div>
 
@@ -762,7 +752,7 @@ export function ScrollingHomePage({ onPageChange }) {
                     </div>
                     <div>
                       <h3 className="font-semibold">Email</h3>
-                      <p className="text-[rgba(224,230,237,0.75)]">contact@upliftcode.com</p>
+                      <p className="text-[rgba(224,230,237,0.75)]">bhavyag@upliftcode.in</p>
                     </div>
                   </div>
 
@@ -772,7 +762,7 @@ export function ScrollingHomePage({ onPageChange }) {
                     </div>
                     <div>
                       <h3 className="font-semibold">Phone</h3>
-                      <p className="text-[rgba(224,230,237,0.75)]">+1 (555) 123-4567</p>
+                      <p className="text-[rgba(224,230,237,0.75)]">+19 90600 62992</p>
                     </div>
                   </div>
 
@@ -782,7 +772,7 @@ export function ScrollingHomePage({ onPageChange }) {
                     </div>
                     <div>
                       <h3 className="font-semibold">Business Hours</h3>
-                      <p className="text-[rgba(224,230,237,0.75)]">Mon - Fri: 9:00 AM - 6:00 PM PST</p>
+                      <p className="text-[rgba(224,230,237,0.75)]">Mon - Fri: 9:00 AM - 6:00 PM IST</p>
                     </div>
                   </div>
                 </div>
@@ -790,9 +780,9 @@ export function ScrollingHomePage({ onPageChange }) {
 
               <div className="rounded-2xl p-6 mt-6 bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.04)] text-center">
                 <Calendar className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-                <h3 className="font-semibold mb-2">Free Consultation Available</h3>
+                <h3 className="font-semibold mb-2">Discuss your needs</h3>
                 <p className="text-sm text-[rgba(224,230,237,0.75)] mb-4">
-                  Schedule a 30-minute consultation to discuss your QA needs
+                  Schedule a 30-minute consultation to discuss your needs
                 </p>
                 <div className="flex justify-center items-center gap-2">
                   <div className="w-2 h-2 bg-[#2BBBAD] rounded-full animate-pulse" />
@@ -824,6 +814,7 @@ export function ScrollingHomePage({ onPageChange }) {
             <ul className="space-y-2 text-sm">
               <li><a href="#home" className="hover:text-purple-400">Home</a></li>
               <li><a href="#services" className="hover:text-purple-400">Services</a></li>
+              <li><a href="#our-culture" className="hover:text-purple-400">Our Culture</a></li>
               <li><a href="#about" className="hover:text-purple-400">About</a></li>
               <li><a href="#contact-us" className="hover:text-purple-400">Contact</a></li>
             </ul>
@@ -832,9 +823,9 @@ export function ScrollingHomePage({ onPageChange }) {
           {/* Contact */}
           <div>
             <h4 className="font-semibold mb-3 text-white">Contact</h4>
-            <p>Email: <span className="text-purple-400">contact@upliftcode.com</span></p>
-            <p>Phone: +1 (555) 123-4567</p>
-            <p>Mon - Fri: 9:00 AM - 6:00 PM PST</p>
+            <p>Email: <span className="text-purple-400">bhavyag@upliftcode.in</span></p>
+            <p>Phone: +91 90600 62992</p>
+            <p>Mon - Fri: 9:00 AM - 6:00 PM IST</p>
           </div>
         </div>
 
