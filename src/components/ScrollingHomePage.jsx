@@ -1,10 +1,10 @@
 /* File: src/components/ScrollingHomePage.jsx */
 "use client";
 import React, { useEffect, useState, useMemo, useRef } from "react";
-import { motion,useMotionValue } from "motion/react";
+import { motion, useMotionValue } from "motion/react";
 import { Button } from "./ui/button";
-import heroImg from "../assets/Milky_way.jpg";
 import bhavyaImg from "../assets/bhavya-gundanna.jpg";
+import logoImg from "../assets/logo.jpg";
 import CultureCarouselSection from './CultureCarouselSection'
 import {
   ArrowRight,
@@ -20,23 +20,15 @@ import {
   Mail,
   Phone,
   Clock,
+  Sparkles,
+  TagIcon,
+  Plug,
 } from "lucide-react";
 import PropTypes from "prop-types";
 import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card } from "@/components/ui/card";
-/**
- * ScrollingHomePage — self-contained version.
- * - Hero with typewriter tagline
- * - Services auto-scrolling carousel (patterned cards)
- * - About section (Bhavya Gundanna)
- * - Contact form (EmailJS via VITE_EMAILJS_*)
- *
- * Notes:
- * - Requires: /public/bg.jpg and /public/bhavya-gundanna.jpg
- * - Env: VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY
- */
 
 export function ScrollingHomePage({ onPageChange }) {
   // -----------------------------------------
@@ -67,7 +59,7 @@ export function ScrollingHomePage({ onPageChange }) {
         { id: "home", name: "Home" },
         { id: "services", name: "Services" },
         { id: "our-culture", name: "Our Culture" },
-        { id: "about", name: "About" },
+        { id: "about-the-founder", name: "About The Founder" },
         { id: "contact-us", name: "Contact Us" },
       ];
       const scrollPosition = window.scrollY + 140;
@@ -90,34 +82,32 @@ export function ScrollingHomePage({ onPageChange }) {
   const services = useMemo(
     () => [
       {
-        icon: Globe,
-        title: "AI Product Testing",
-        subtitle: "Intelligent Model Validation",
+        icon: Code,
+        title: "Development",
         description:
           "Comprehensive testing solutions for AI and ML products including model validation, bias detection, and performance optimization.",
         features: [
-          "Model Validation",
-          "Bias Detection",
-          "Performance Testing",
-          "Edge Case Analysis",
+          "AI-driven software engineering",
+          "Scalable architecture design",
+          "Website design and development",
+          "Mobile app development",
         ],
-        gradient: "from-cyan-400 via-blue-500 to-indigo-600",
-        bgGradient:
-          "from-cyan-500/20 via-blue-600/10 to-indigo-500/20",
-        iconBg: "from-cyan-400 to-indigo-600",
-        pattern: "waves",
+        gradient: "from-purple-400 via-fuchsia-500 to-pink-600",
+        bgGradient: "from-purple-500/20 via-fuchsia-600/10 to-pink-500/20",
+        iconBg: "from-purple-400 to-pink-600",
+        pattern: "gradient-sphere",
       },
       {
-        icon: TestTube,
-        title: "Security & Vulnerability Testing",
-        subtitle: "Advanced Threat Detection",
+        icon: Sparkles,
+        title: "Quality Assurance",
         description:
           "Comprehensive security testing with AI-powered vulnerability scanning and threat detection for robust protection.",
         features: [
-          "Vulnerability Scanning",
-          "Code Analysis",
-          "Security AI",
-          "Threat Detection",
+          "Customized Testing Strategy",
+          "Manual Testing and Smart Automation",
+          "UAT",
+          "Analytics & Real-time Dashboards",
+          "Performance Testing",
         ],
         gradient: "from-red-500 via-rose-600 to-purple-600",
         bgGradient:
@@ -126,16 +116,15 @@ export function ScrollingHomePage({ onPageChange }) {
         pattern: "dots",
       },
       {
-        icon: Cog,
-        title: "Regression Testing",
-        subtitle: "Automated Quality Assurance",
+        icon: BarChart3,
+        title: "Evals",
         description:
           "Smart regression testing with visual diffing, anomaly detection, and fast execution for continuous quality.",
         features: [
-          "Visual Diffing",
-          "Anomaly Detection",
-          "Fast Execution",
-          "Smart Automation",
+          "Automated Benchmarks (Precision, Recall, BLEU, F1, BERTScore)",
+          "Human-in-the-Loop Testing (usability, alignment, safety)",
+          "Domain-Specific Evals (FinTech, Healthcare, Enterprise)",
+          "Continuous Monitoring (drift, hallucinations, fairness)",
         ],
         gradient: "from-purple-500 via-violet-600 to-indigo-600",
         bgGradient:
@@ -144,16 +133,15 @@ export function ScrollingHomePage({ onPageChange }) {
         pattern: "grid",
       },
       {
-        icon: BarChart3,
-        title: "Test Analytics & Reporting",
-        subtitle: "Real-time Insights",
+        icon: TagIcon,
+        title: "Data Annotation",
         description:
           "Advanced analytics with real-time data visualization, actionable insights, and custom dashboards.",
         features: [
-          "Real-time Data",
-          "Actionable Insights",
-          "Custom Dashboards",
-          "Performance Metrics",
+          "Text Annotation",
+          "Image & Video Annotation",
+          "Audio Labeling and emotion tagging",
+          "Multi modal Annotation",
         ],
         gradient: "from-emerald-500 via-teal-600 to-cyan-600",
         bgGradient:
@@ -164,7 +152,6 @@ export function ScrollingHomePage({ onPageChange }) {
       {
         icon: Zap,
         title: "Performance Optimization",
-        subtitle: "Speed & Efficiency",
         description:
           "AI-driven performance testing and optimization to ensure your applications run at peak efficiency.",
         features: [
@@ -180,7 +167,7 @@ export function ScrollingHomePage({ onPageChange }) {
         pattern: "diagonal",
       },
       {
-        icon: Shield,
+        icon: Plug,
         title: "API & Integration Testing",
         subtitle: "Seamless Connectivity",
         description:
@@ -213,63 +200,63 @@ export function ScrollingHomePage({ onPageChange }) {
     return () => window.removeEventListener("keydown", handleShortcut);
   }, []);
 
-const x = useMotionValue(0);
-const servicesContainerRef = useRef(null);
-const [isHovered, setIsHovered] = useState(false);
-const [isMobile, setIsMobile] = useState(false);
-const [halfWidth, setHalfWidth] = useState(0);
-useEffect(() => {
-  const handleResize = () => {
-    setIsMobile(window.innerWidth < 768);
-  };
-  handleResize();
-  window.addEventListener('resize', handleResize);
-  return () => window.removeEventListener('resize', handleResize);
-}, []);
+  const x = useMotionValue(0);
+  const servicesContainerRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [halfWidth, setHalfWidth] = useState(0);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-useEffect(() => {
-  const updateWidth = () => {
-    if (servicesContainerRef.current) {
-      setHalfWidth(servicesContainerRef.current.scrollWidth / 2);
+  useEffect(() => {
+    const updateWidth = () => {
+      if (servicesContainerRef.current) {
+        setHalfWidth(servicesContainerRef.current.scrollWidth / 2);
+      }
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  useEffect(() => {
+    let raf;
+    if (halfWidth === 0) return;
+
+    let lastTime = performance.now();
+    const pxPerMs = halfWidth / 40000; // For 40s duration
+
+    const animateScroll = () => {
+      const now = performance.now();
+      const delta = now - lastTime;
+      lastTime = now;
+
+      let current = x.get();
+      current -= pxPerMs * delta;
+      if (current < -halfWidth) {
+        current += halfWidth;
+      }
+      x.set(current);
+
+      raf = requestAnimationFrame(animateScroll);
+    };
+
+    if (!isHovered && !isMobile) {
+      animateScroll();
     }
-  };
-  updateWidth();
-  window.addEventListener('resize', updateWidth);
-  return () => window.removeEventListener('resize', updateWidth);
-}, []);
 
-useEffect(() => {
-  let raf;
-  if (halfWidth === 0) return;
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [isHovered, isMobile, x, halfWidth]);
 
-  let lastTime = performance.now();
-  const pxPerMs = halfWidth / 40000; // For 40s duration
-
-  const animateScroll = () => {
-    const now = performance.now();
-    const delta = now - lastTime;
-    lastTime = now;
-
-    let current = x.get();
-    current -= pxPerMs * delta;
-    if (current < -halfWidth) {
-      current += halfWidth;
-    }
-    x.set(current);
-
-    raf = requestAnimationFrame(animateScroll);
-  };
-
-  if (!isHovered && !isMobile) {
-    animateScroll();
-  }
-
-  return () => {
-    if (raf) cancelAnimationFrame(raf);
-  };
-}, [isHovered, isMobile, x, halfWidth]);
-
-// The modified services section
+  // The modified services section
   // -----------------------------------------
   // Contact form (EmailJS)
   // -----------------------------------------
@@ -332,10 +319,9 @@ useEffect(() => {
         id="home"
         className="hero-section min-h-screen flex flex-col justify-center bg-cover bg-center bg-no-repeat pt-20"
         style={{
-          background: `url(${heroImg})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
-          backgroundRepeat:'no-repeat'
+          backgroundRepeat: 'no-repeat'
         }}
       >
         {/* Hero Container */}
@@ -351,7 +337,7 @@ useEffect(() => {
             </motion.span>
           </h1>
 
-          <p className="hero-subtext text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="hero-subtext text-lg text-muted-foreground max-w-3xl mx-auto font-bold">
             UpliftCode delivers AI-driven development, QA, and evaluations—ensuring
             your product is built with trust, quality, and scale in mind.
           </p>
@@ -381,7 +367,7 @@ useEffect(() => {
         </div>
 
         {/* Feature Grid */}
-        <div className="container mx-auto px-6 mt-10 mb-20">
+        <div className="container mx-auto font-bold px-6 mt-10 mb-20">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -433,146 +419,146 @@ useEffect(() => {
         </div>
       </section>
 
-<section id="services" className="services-section">
-  <div className="container mx-auto px-6">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-      className="text-center mb-16"
-    >
-      <h1
-        className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent relative inline-block"
-        style={{
-          WebkitTextFillColor: "transparent",
-          WebkitBackgroundClip: "text",
-          paddingBottom: "0.2em",
-        }}
-      >
-        Uplifting Every Stage of Software Development
-      </h1>
-      <p className="text-xl text-[rgba(224,230,237,0.8)] max-w-3xl mx-auto">
-        Development. Testing. Evaluation. Delivered with an AI-first mindset.
-      </p>
-    </motion.div>
-
-    <div
-      className="overflow-hidden overflow-x-hidden"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <motion.div
-        ref={servicesContainerRef}
-        className="flex gap-8 services-scroll"
-        style={{ x }}
-        drag={isMobile ? "x" : false}
-        dragConstraints={isMobile ? { left: -halfWidth, right: 0 } : undefined}
-      >
-        {[...services, ...services].map((service, index) => {
-          const Icon = service.icon;
-          return (
-            <motion.div
-              key={index}
-              className="relative shrink-0 rounded-2xl overflow-hidden shadow-xl bg-black/40 widthing"
-              whileHover={{ scale: 1.05 }}
+      <section id="services" className="services-section">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h1
+              className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent relative inline-block"
+              style={{
+                WebkitTextFillColor: "transparent",
+                WebkitBackgroundClip: "text",
+                paddingBottom: "0.2em",
+              }}
             >
-              {/* Animated pattern background */}
-              <motion.div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage:
-                    service.pattern === "diagonal"
-                      ? "repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 2px, transparent 2px, transparent 6px)"
-                      : service.pattern === "dots"
-                        ? "radial-gradient(rgba(255,255,255,0.25) 2px, transparent 4px)"
-                        : service.pattern === "grid"
-                          ? "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)"
-                          : service.pattern === "waves"
-                            ? "repeating-radial-gradient(circle, rgba(255,255,255,0.12), transparent 60px)"
-                            : "linear-gradient(135deg, rgba(255,255,255,0.1), transparent)",
-                  backgroundSize:
-                    service.pattern === "dots"
-                      ? "40px 40px"
-                      : service.pattern === "grid"
-                        ? "60px 60px"
-                        : "200% 200%",
-                }}
-                animate={
-                  service.pattern === "dots"
-                    ? { backgroundPosition: ["0% 0%", "40px 40px"] }
-                    : service.pattern === "grid"
-                      ? { backgroundPosition: ["0% 0%", "60px 60px"] }
-                      : service.pattern === "waves"
-                        ? { scale: [1, 1.1, 1] }
-                        : service.pattern === "diagonal"
-                          ? { rotate: [0, 360] }
-                          : { opacity: [0.3, 0.6, 0.3] }
-                }
-                transition={{
-                  duration:
-                    service.pattern === "diagonal"
-                      ? 25
-                      : service.pattern === "waves"
-                        ? 6
-                        : 12,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
+              Uplifting Every Stage of Software Development
+            </h1>
+            <p className="text-xl text-[rgba(224,230,237,0.8)] max-w-3xl mx-auto">
+              Development, Testing, Evaluation, Delivered with an AI-first mindset.
+            </p>
+          </motion.div>
 
-              {/* Gradient overlay */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-70`}
-              />
+          <div
+            className="overflow-hidden overflow-x-hidden"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <motion.div
+              ref={servicesContainerRef}
+              className="flex gap-8 services-scroll"
+              style={{ x }}
+              drag={isMobile ? "x" : false}
+              dragConstraints={isMobile ? { left: -halfWidth, right: 0 } : undefined}
+            >
+              {[...services, ...services].map((service, index) => {
+                const Icon = service.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    className="relative shrink-0 rounded-2xl overflow-hidden shadow-xl bg-black/40 widthing"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {/* Animated pattern background */}
+                    <motion.div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage:
+                          service.pattern === "diagonal"
+                            ? "repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 2px, transparent 2px, transparent 6px)"
+                            : service.pattern === "dots"
+                              ? "radial-gradient(rgba(255,255,255,0.25) 2px, transparent 4px)"
+                              : service.pattern === "grid"
+                                ? "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)"
+                                : service.pattern === "waves"
+                                  ? "repeating-radial-gradient(circle, rgba(255,255,255,0.12), transparent 60px)"
+                                  : "linear-gradient(135deg, rgba(255,255,255,0.1), transparent)",
+                        backgroundSize:
+                          service.pattern === "dots"
+                            ? "40px 40px"
+                            : service.pattern === "grid"
+                              ? "60px 60px"
+                              : "200% 200%",
+                      }}
+                      animate={
+                        service.pattern === "dots"
+                          ? { backgroundPosition: ["0% 0%", "40px 40px"] }
+                          : service.pattern === "grid"
+                            ? { backgroundPosition: ["0% 0%", "60px 60px"] }
+                            : service.pattern === "waves"
+                              ? { scale: [1, 1.1, 1] }
+                              : service.pattern === "diagonal"
+                                ? { rotate: [0, 360] }
+                                : { opacity: [0.3, 0.6, 0.3] }
+                      }
+                      transition={{
+                        duration:
+                          service.pattern === "diagonal"
+                            ? 25
+                            : service.pattern === "waves"
+                              ? 6
+                              : 12,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    />
 
-              {/* Card content */}
-              <div className="relative z-10 p-6 flex flex-col h-full text-white">
-                <div
-                  className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${service.iconBg} p-2 mb-4 flex items-center justify-center`}
-                >
-                  <Icon className="w-7 h-7 text-white" />
-                </div>
+                    {/* Gradient overlay */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-70`}
+                    />
 
-                <h3
-                  className={`text-3xl font-bold mb-1 bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
-                >
-                  {service.title}
-                </h3>
-
-                <p className="text-lg font-medium mb-3 text-white/80">
-                  {service.subtitle}
-                </p>
-
-                <div className="space-y-2 mb-4 flex-1 overflow-hidden">
-                  {service.features.map((f, fi) => (
-                    <div key={fi} className="flex items-center gap-2 text-xs">
+                    {/* Card content */}
+                    <div className="relative z-10 p-6 flex flex-col h-full text-white">
                       <div
-                        className={`w-4 h-4 rounded-full bg-gradient-to-r ${service.iconBg} flex items-center justify-center`}
+                        className={`w-12 h-12 rounded-2xl bg-gradient-to-r ${service.iconBg} p-2 mb-4 flex items-center justify-center`}
                       >
-                        <CheckCircle className="w-2.5 h-2.5 text-white" />
+                        <Icon className="w-7 h-7 text-white" />
                       </div>
-                      <span className="text-white/90 truncate text-sm">{f}</span>
-                    </div>
-                  ))}
-                </div>
 
-                <motion.div
-                  className={`h-1 rounded-full bg-gradient-to-r ${service.gradient} opacity-90`}
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ duration: 0.8 }}
-                />
-              </div>
+                      <h3
+                        className={`text-3xl font-bold mb-1 bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
+                      >
+                        {service.title}
+                      </h3>
+
+                      <p className="text-lg font-medium mb-3 text-white/80">
+                        {service.subtitle}
+                      </p>
+
+                      <div className="space-y-2 mb-4 flex-1 overflow-hidden">
+                        {service.features.map((f, fi) => (
+                          <div key={fi} className="flex items-center gap-2 text-xs">
+                            <div
+                              className={`w-4 h-4 rounded-full bg-gradient-to-r ${service.iconBg} flex items-center justify-center`}
+                            >
+                              <CheckCircle className="w-2.5 h-2.5 text-white" />
+                            </div>
+                            <span className="text-white/90 truncate text-sm">{f}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <motion.div
+                        className={`h-1 rounded-full bg-gradient-to-r ${service.gradient} opacity-90`}
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        transition={{ duration: 0.8 }}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
-          );
-        })}
-      </motion.div>
-    </div>
-  </div>
-</section>
+          </div>
+        </div>
+      </section>
       <CultureCarouselSection id='our-culture' />
-      <section id="about" className="py-20 bg-[#0d0d14]">
+      <section id="about-the-founder" className="py-20 bg-[#0d0d14]">
         <div className="container mx-auto px-6">
           {/* Heading */}
           <motion.div
@@ -583,7 +569,7 @@ useEffect(() => {
             className="text-center mb-16"
           >
             <h2 className="text-5xl font-bold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent">
-              About
+              About The Founder
             </h2>
             <p className="text-lg text-[rgba(224,230,237,0.85)] mt-3">
               Shaped by experience, driven by innovation.
@@ -619,7 +605,7 @@ useEffect(() => {
               className="text-left"
             >
               <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent mb-6">
-                I’m Bhavya Gundanna — Founder & CEO
+                Bhavya Gundanna — Founder & CEO
               </h3>
 
               {/* Unified paragraph */}
@@ -766,13 +752,13 @@ useEffect(() => {
                       className="w-full px-3 py-2 rounded-md bg-[#1a1a26] text-white border border-[rgba(255,255,255,0.06)] focus:ring-2 focus:ring-purple-500"
                     >
                       <option value="">Select a service</option>
-                      <option value="AI-Product-Testing">AI Product Testing</option>
-                      <option value="Security-&-Vulnerability">Security & Vulnerability</option>
-                      <option value="Regression-Testing">Regression Testing</option>
-                      <option value="Test-Analytics-&-Reporting">Test Analytics & Reporting</option>
+                      <option value="Development">Development</option>
+                      <option value="Quality-Assurance">Quality Assurance</option>
+                      <option value="Evals">Evals</option>
+                      <option value="Data-Annotation">Data Annotation</option>
                       <option value="Performance-Optimization">Performance Optimization</option>
                       <option value="API-&-Integration-Testing">API & Integration Testing</option>
-                      <option value="consultation">Free Consultation</option>
+                      <option value="Strategy-Consultation">Strategy Consultation</option>
                     </select>
                   </div>
 
@@ -815,7 +801,7 @@ useEffect(() => {
                     </div>
                     <div>
                       <h3 className="font-semibold">Email</h3>
-                      <p className="text-[rgba(224,230,237,0.75)]">bhavyag@upliftcode.in</p>
+                      <p className="text-[rgba(224,230,237,0.75)]">contact@upliftcode.in</p>
                     </div>
                   </div>
 
@@ -825,7 +811,7 @@ useEffect(() => {
                     </div>
                     <div>
                       <h3 className="font-semibold">Phone</h3>
-                      <p className="text-[rgba(224,230,237,0.75)]">+91 90600 62992</p>
+                      <p className="text-[rgba(224,230,237,0.75)]">+91 9880788582</p>
                     </div>
                   </div>
 
@@ -878,7 +864,7 @@ useEffect(() => {
               <li><a href="#home" className="hover:text-purple-400">Home</a></li>
               <li><a href="#services" className="hover:text-purple-400">Services</a></li>
               <li><a href="#our-culture" className="hover:text-purple-400">Our Culture</a></li>
-              <li><a href="#about" className="hover:text-purple-400">About</a></li>
+              <li><a href="#about-the-founder" className="hover:text-purple-400">About</a></li>
               <li><a href="#contact-us" className="hover:text-purple-400">Contact</a></li>
             </ul>
           </div>
@@ -886,8 +872,8 @@ useEffect(() => {
           {/* Contact */}
           <div>
             <h4 className="font-semibold mb-3 text-white">Contact</h4>
-            <p>Email: <span className="text-purple-400">bhavyag@upliftcode.in</span></p>
-            <p>Phone: +91 90600 62992</p>
+            <p>Email: <span className="text-purple-400">contact@upliftcode.in</span></p>
+            <p>Phone: +91 9880788582</p>
             <p>Mon - Fri: 9:00 AM - 6:00 PM IST</p>
           </div>
         </div>

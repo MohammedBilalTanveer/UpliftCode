@@ -3329,23 +3329,8 @@ select option {
   }
 }
 .cust-height {
-  height: 420px;
+  height: 270px;
   padding-bottom: 2.5rem; /* Increased to ensure space for bottom gradient line */
-}
-
-/* ✨ Soft glow for card border */
-.shadow-glow-soft {
-  box-shadow: 0 0 12px rgba(168, 85, 247, 0.1),
-              0 0 25px rgba(192, 38, 211, 0.05);
-  transition: box-shadow 0.4s ease, transform 0.3s ease;
-}
-
-.shadow-glow-soft:hover {
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.2),
-              0 0 50px rgba(192, 38, 211, 0.1);
-}
-.visible{
-  overflow: visible;
 }
 .culture-margin{
   margin-left: 10px;
@@ -3359,4 +3344,7 @@ select option {
   .culture-margin{
     margin-left : 0px;
   }
+}
+.gap-10{
+  gap:10px
 }

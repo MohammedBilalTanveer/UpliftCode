@@ -10,15 +10,35 @@ import PropTypes from "prop-types";
 export function Navigation({ currentPage, onPageChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navItems = ["Home", "Services", "Our Culture", "About", "Contact Us"];
+  const navItems = ["Home", "Services", "Our Culture", "About The Founder", "Contact Us"];
 
-  const scrollToSection = (sectionId) => {
-    const id = sectionId.toLowerCase().replace(" ", "-");
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
+const scrollToSection = (sectionId) => {
+  const id = sectionId.toLowerCase().replace(/\s+/g, "-");
+  const element = document.getElementById(id);
+
+  const doScroll = () => {
+    if (element) {
+      const nav = document.getElementById("site-nav");
+      const navHeight = nav?.offsetHeight || 64; // fallback h-16
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
     onPageChange && onPageChange(sectionId);
-    setMenuOpen(false); // close mobile menu after click
   };
+
+  if (menuOpen) {
+    setMenuOpen(false);
+    // wait until menu finishes closing before scrolling
+    setTimeout(doScroll, 300);
+  } else {
+    doScroll();
+  }
+};
 
   return (
     <motion.nav
@@ -65,7 +85,6 @@ export function Navigation({ currentPage, onPageChange }) {
             ))}
           </div>
 
-          {/* Right actions */}
           {/* Right actions */}
           <div className="flex items-center gap-4">
             {/* Show only on lg and larger screens */}
