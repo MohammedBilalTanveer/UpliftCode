@@ -3,6 +3,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "./ui/button";
 import PropTypes from "prop-types";
+import logoImg from "../assets/logo.jpg";
+import logo from "../assets/rounded-logo.png"
 
 /**
  * @param {{ currentPage: string, onPageChange: (page: string) => void }} props
@@ -12,36 +14,37 @@ export function Navigation({ currentPage, onPageChange }) {
 
   const navItems = ["Home", "Services", "Our Culture", "About The Founder", "Contact Us"];
 
-const scrollToSection = (sectionId) => {
-  const id = sectionId.toLowerCase().replace(/\s+/g, "-");
-  const element = document.getElementById(id);
+  const scrollToSection = (sectionId) => {
+    const id = sectionId.toLowerCase().replace(/\s+/g, "-");
+    const element = document.getElementById(id);
 
-  const doScroll = () => {
-    if (element) {
-      const nav = document.getElementById("site-nav");
-      const navHeight = nav?.offsetHeight || 64; // fallback h-16
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - navHeight;
+    const doScroll = () => {
+      if (element) {
+        const nav = document.getElementById("site-nav");
+        const navHeight = nav?.offsetHeight || 64; // fallback h-16
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - navHeight;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+      onPageChange && onPageChange(sectionId);
+    };
+
+    if (menuOpen) {
+      setMenuOpen(false);
+      // wait until menu finishes closing before scrolling
+      setTimeout(doScroll, 300);
+    } else {
+      doScroll();
     }
-    onPageChange && onPageChange(sectionId);
   };
-
-  if (menuOpen) {
-    setMenuOpen(false);
-    // wait until menu finishes closing before scrolling
-    setTimeout(doScroll, 300);
-  } else {
-    doScroll();
-  }
-};
 
   return (
     <motion.nav
+      id="site-nav"
       className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -54,8 +57,13 @@ const scrollToSection = (sectionId) => {
             className="flex items-center space-x-3 cursor-pointer flex-shrink-0"
             onClick={() => scrollToSection("Home")}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center shadow">
-              <span className="text-white font-bold">U</span>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow overflow-hidden">
+              <img
+                src={logoImg}
+                alt="UpliftCode Logo"
+                className="object-cover w-full h-full"
+                style={{borderRadius: "50%"}}
+              />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
               UpliftCode
@@ -68,10 +76,11 @@ const scrollToSection = (sectionId) => {
               <motion.button
                 key={item}
                 onClick={() => scrollToSection(item)}
-                className={`relative px-4 py-2 transition-all duration-200 text-sm font-medium ${currentPage === item
-                  ? "text-purple-400"
-                  : "text-muted-foreground hover:text-foreground"
-                  }`}
+                className={`relative px-4 py-2 transition-all duration-200 text-sm font-medium ${
+                  currentPage === item
+                    ? "text-purple-400"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
                 whileHover={{ scale: 1.03 }}
               >
                 {item}
@@ -87,7 +96,6 @@ const scrollToSection = (sectionId) => {
 
           {/* Right actions */}
           <div className="flex items-center gap-4">
-            {/* Show only on lg and larger screens */}
             <Button
               className="inline-flex flex-shrink-0 bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 shadow-md text-sm px-6 py-2 h-10 hide"
               onClick={() => scrollToSection("Contact Us")}
@@ -103,12 +111,32 @@ const scrollToSection = (sectionId) => {
               aria-label="Toggle menu"
             >
               {menuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               )}
             </motion.button>
@@ -131,10 +159,11 @@ const scrollToSection = (sectionId) => {
                 <button
                   key={item}
                   onClick={() => scrollToSection(item)}
-                  className={`text-left px-2 py-2 rounded-md transition-colors ${currentPage === item
-                    ? "text-purple-400"
-                    : "text-muted-foreground hover:text-foreground"
-                    }`}
+                  className={`text-left px-2 py-2 rounded-md transition-colors ${
+                    currentPage === item
+                      ? "text-purple-400"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
                   {item}
                 </button>

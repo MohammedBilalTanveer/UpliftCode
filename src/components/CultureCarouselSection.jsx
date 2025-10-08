@@ -27,7 +27,7 @@ const culturePrinciples = [
         number: "2",
         title: "Ownership",
         description:
-            "We own outcomes, not just tasks. When we commit, we deliver — learning from every challenge and turning it into long-term progress.",
+            "We own outcomes, not just tasks. When we commit, we deliver — learning from every challenge and turning it into a milestone",
         icon: Target,
         gradientFrom: "#f97316",
         gradientVia: "#d97706",
@@ -63,7 +63,7 @@ const culturePrinciples = [
         number: "5",
         title: "Make AI a Mindset",
         description:
-            "AI isn't a feature — it's how we think. We infuse intelligence into every process to make smarter, faster, and fairer systems.",
+            "AI isn't a feature - it's how we reinforce and amplify our thoughts and insights.",
         icon: Brain,
         gradientFrom: "#a855f7",
         gradientVia: "#7c3aed",

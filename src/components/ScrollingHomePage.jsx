@@ -4,7 +4,6 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { motion, useMotionValue } from "motion/react";
 import { Button } from "./ui/button";
 import bhavyaImg from "../assets/bhavya-gundanna.jpg";
-import logoImg from "../assets/logo.jpg";
 import CultureCarouselSection from './CultureCarouselSection'
 import {
   ArrowRight,
@@ -321,7 +320,7 @@ export function ScrollingHomePage({ onPageChange }) {
         style={{
           backgroundPosition: "center",
           backgroundSize: "cover",
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
         }}
       >
         {/* Hero Container */}
